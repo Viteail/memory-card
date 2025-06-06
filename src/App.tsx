@@ -9,7 +9,7 @@ function App() {
   const [currentScore, setCurrentScore] = useState(0);
 
   return (
-    <div className="">
+    <div>
       <Header>
         <Scores bestScore={bestScore} currentScore={currentScore}></Scores>
       </Header>
