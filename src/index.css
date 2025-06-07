@@ -1,1 +1,10 @@
 @import "tailwindcss";
+
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+@font-face {
+  font-family: PokemonSolid;
+  src: url(assets/fonts/PokemonSolid.ttf);
+}

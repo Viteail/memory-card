@@ -1,3 +1,5 @@
+import classes from "./header.module.css";
+
 interface IHeaderProps {
   children: React.ReactNode;
 }
@@ -6,8 +8,8 @@ export const Header: React.FC<IHeaderProps> = (props) => {
   const { children } = props;
 
   return (
-    <div>
-      <div>Pokemon Memory Card</div>
+    <div className={classes.header}>
+      <div className={classes.title}>Pokémon Memory Game</div>
       {children}
     </div>
   );

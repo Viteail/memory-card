@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+.header {
+  @apply flex flex-col items-center p-5 gap-5 bg-rose-700;
+}
+
+.title {
+  @apply text-5xl text-yellow-400 font-[PokemonSolid];
+  -webkit-text-stroke: var(--color-sky-700) 2.5px;
+}
