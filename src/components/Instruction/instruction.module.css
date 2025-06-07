@@ -1,0 +1,5 @@
+@import "tailwindcss";
+
+.instruction {
+  @apply text-center p-2;
+}

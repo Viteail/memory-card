@@ -1,3 +1,5 @@
+import classes from "./pokeCard.module.css";
+
 import type { IPokeData } from "../PokeCardList";
 
 interface IPokeCardProps {
@@ -6,12 +8,12 @@ interface IPokeCardProps {
 
 export const PokeCard: React.FC<IPokeCardProps> = (props) => {
   const { data } = props;
-  const { name, sprite } = data;
+  const { name, spriteUrl } = data;
 
   return (
-    <div>
-      <div>
-        <img src={sprite} />
+    <div className={classes.pokeCard}>
+      <div className={classes.pokeImgWrapper}>
+        <img className={classes.pokeImg} src={spriteUrl} />
       </div>
       <div>{name}</div>
     </div>

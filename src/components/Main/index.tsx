@@ -1,3 +1,5 @@
+import classes from './main.module.css';
+
 interface IMainProps {
   children: React.ReactNode;
 }
@@ -5,5 +7,5 @@ interface IMainProps {
 export const Main: React.FC<IMainProps> = (props) => {
   const { children } = props;
 
-  return <div>{children}</div>;
+  return <div className={classes.main}>{children}</div>;
 };

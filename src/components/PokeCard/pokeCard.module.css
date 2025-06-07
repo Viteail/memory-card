@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+.pokeCard {
+  @apply border-3 border-sky-700 rounded-md w-[120px] h-[170px] p-2 text-center cursor-pointer bg-yellow-500;
+}
+
+.pokeImgWrapper {
+  @apply flex justify-center;
+}
+
+.pokeImg {
+  @apply border border-transparent bg-white;
+}
