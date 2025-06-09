@@ -1,47 +1,25 @@
-import { useEffect, useState } from "react";
-
 import classes from "./pokeCardList.module.css";
-
-import { generateUniqueRandomNumbers } from "../../utils/randomInt";
 
 import { PokeCard } from "../PokeCard";
 
-export interface IPokeData {
-  name: string;
-  spriteUrl: string;
+import type { IPokeData } from "../../App";
+
+interface IPokeCardListProps {
+  pokeDatas: IPokeData[];
+  handleClickPokeCard: (pokeId: number) => void;
 }
 
-export const PokeCardList = () => {
-  const [pokeDatas, setPokeDatas] = useState<IPokeData[]>([]);
-  const randomPokeIds = generateUniqueRandomNumbers(0, 1025, 20);
-  console.log(randomPokeIds);
-
-  useEffect(() => {
-    const fetchPokemon = async () => {
-      try {
-        const promises = randomPokeIds.map(async (id) => {
-          const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}/`);
-          if (!res.ok) throw new Error("Network response was not ok");
-          return res.json();
-        });
-
-        const results = await Promise.all(promises);
-        const data = results.map((res) => ({
-          name: res.name,
-          spriteUrl: res.sprites.front_default,
-        }));
-        setPokeDatas(data);
-      } catch (error) {
-        console.error("Error fetching pokemon data: ", error);
-      }
-    };
-    fetchPokemon();
-  }, []);
+export const PokeCardList: React.FC<IPokeCardListProps> = (props) => {
+  const { pokeDatas, handleClickPokeCard } = props;
 
   return (
     <div className={classes.pokeCardList}>
       {pokeDatas.map((data, index) => (
-        <PokeCard key={index} data={data}></PokeCard>
+        <PokeCard
+          key={index}
+          data={data}
+          onClick={() => handleClickPokeCard(data.id)}
+        ></PokeCard>
       ))}
     </div>
   );
