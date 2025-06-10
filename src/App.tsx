@@ -14,19 +14,21 @@ export interface IPokeData {
 
 function App() {
   // const [gameOver, setGameOver] = useState(false);
-
   const [bestScore, setBestScore] = useState(0);
   const [currentScore, setCurrentScore] = useState(0);
 
   const [pokeDatas, setPokeDatas] = useState<IPokeData[]>([]);
   const [selectedPokemons, setSelectedPokemons] = useState<number[]>([]);
 
+  const [randomizedPokeDatas, setRandomizedPokeDatas] = useState<IPokeData[]>(
+    [],
+  );
+
   const randomPokeIds = generateUniqueRandomNumbers(0, 1025, 20);
-  console.log(selectedPokemons);
+  console.log(pokeDatas);
 
   const handleClickPokeCard = (pokeId: number) => {
     if (selectedPokemons.includes(pokeId)) {
-      console.log("py");
       setBestScore((prev) => (currentScore > prev ? currentScore : prev));
       setCurrentScore(0);
       setSelectedPokemons([]);
@@ -34,6 +36,7 @@ function App() {
     }
     setSelectedPokemons((prev) => [...prev, pokeId]);
     setCurrentScore((prev) => prev + 1);
+    randomizeData();
   };
 
   useEffect(() => {
@@ -65,6 +68,17 @@ function App() {
     };
   }, []);
 
+  const randomizeData = () => {
+    const arr = [...pokeDatas];
+
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+
+    setRandomizedPokeDatas(arr);
+  };
+
   return (
     <div>
       <Header>
@@ -74,7 +88,9 @@ function App() {
         <Instruction></Instruction>
         <PokeCardList
           handleClickPokeCard={handleClickPokeCard}
-          pokeDatas={pokeDatas}
+          pokeDatas={
+            randomizedPokeDatas.length === 0 ? pokeDatas : randomizedPokeDatas
+          }
         ></PokeCardList>
       </Main>
     </div>

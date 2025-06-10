@@ -14,9 +14,9 @@ export const PokeCardList: React.FC<IPokeCardListProps> = (props) => {
 
   return (
     <div className={classes.pokeCardList}>
-      {pokeDatas.map((data, index) => (
+      {pokeDatas.map((data) => (
         <PokeCard
-          key={index}
+          key={data.id}
           data={data}
           onClick={() => handleClickPokeCard(data.id)}
         ></PokeCard>
