@@ -13,7 +13,7 @@ export interface IPokeData {
 }
 
 function App() {
-  // const [gameOver, setGameOver] = useState(false);
+  const [newGame, setNewGame] = useState(true);
   const [bestScore, setBestScore] = useState(0);
   const [currentScore, setCurrentScore] = useState(0);
 
@@ -24,7 +24,6 @@ function App() {
     [],
   );
 
-  const randomPokeIds = generateUniqueRandomNumbers(0, 1025, 20);
   console.log(pokeDatas);
 
   const handleClickPokeCard = (pokeId: number) => {
@@ -32,6 +31,8 @@ function App() {
       setBestScore((prev) => (currentScore > prev ? currentScore : prev));
       setCurrentScore(0);
       setSelectedPokemons([]);
+      setRandomizedPokeDatas([]);
+      setNewGame(true);
       return;
     }
     setSelectedPokemons((prev) => [...prev, pokeId]);
@@ -40,7 +41,10 @@ function App() {
   };
 
   useEffect(() => {
+    if (!newGame) return;
     let ignore = false;
+
+    const randomPokeIds = generateUniqueRandomNumbers(0, 1025, 20);
 
     const fetchPokemon = async () => {
       try {
@@ -62,11 +66,12 @@ function App() {
       }
     };
     if (!ignore) fetchPokemon();
+    setNewGame(false);
 
     return () => {
       ignore = true;
     };
-  }, []);
+  }, [newGame]);
 
   const randomizeData = () => {
     const arr = [...pokeDatas];
