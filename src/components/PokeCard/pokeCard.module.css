@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 .flipPokeCard {
-  @apply bg-transparent w-[125px] h-[175px] perspective-midrange;
+  @apply bg-transparent w-[150px] h-[210px] perspective-midrange;
 }
 
 .flipPokeCardInner {
@@ -18,7 +18,7 @@
 }
 
 .flipPokeCardFront {
-  @apply text-center p-2.5 border-5 border-sky-700 bg-yellow-500;
+  @apply cursor-pointer text-center p-2.5 border-5 border-sky-700 bg-yellow-500;
 }
 
 .loading {

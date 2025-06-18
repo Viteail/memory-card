@@ -61,9 +61,9 @@ function App() {
       }
     };
     if (!ignore) {
+      setNewGame(false);
       setLoading(true);
       fetchPokemon();
-      setNewGame(false);
       setTimeout(() => {
         setLoading(false);
       }, 600);
