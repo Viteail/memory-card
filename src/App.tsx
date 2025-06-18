@@ -17,21 +17,16 @@ function App() {
   const [bestScore, setBestScore] = useState(0);
   const [currentScore, setCurrentScore] = useState(0);
 
+  const [isLoading, setLoading] = useState(true);
+
   const [pokeDatas, setPokeDatas] = useState<IPokeData[]>([]);
   const [selectedPokemons, setSelectedPokemons] = useState<number[]>([]);
-
-  const [randomizedPokeDatas, setRandomizedPokeDatas] = useState<IPokeData[]>(
-    [],
-  );
-
-  console.log(pokeDatas);
 
   const handleClickPokeCard = (pokeId: number) => {
     if (selectedPokemons.includes(pokeId)) {
       setBestScore((prev) => (currentScore > prev ? currentScore : prev));
       setCurrentScore(0);
       setSelectedPokemons([]);
-      setRandomizedPokeDatas([]);
       setNewGame(true);
       return;
     }
@@ -44,7 +39,7 @@ function App() {
     if (!newGame) return;
     let ignore = false;
 
-    const randomPokeIds = generateUniqueRandomNumbers(0, 1025, 20);
+    const randomPokeIds = generateUniqueRandomNumbers(1, 1025, 20);
 
     const fetchPokemon = async () => {
       try {
@@ -65,8 +60,14 @@ function App() {
         console.error("Error fetching pokemon data: ", error);
       }
     };
-    if (!ignore) fetchPokemon();
-    setNewGame(false);
+    if (!ignore) {
+      setLoading(true);
+      fetchPokemon();
+      setNewGame(false);
+      setTimeout(() => {
+        setLoading(false);
+      }, 600);
+    }
 
     return () => {
       ignore = true;
@@ -81,7 +82,7 @@ function App() {
       [arr[i], arr[j]] = [arr[j], arr[i]];
     }
 
-    setRandomizedPokeDatas(arr);
+    setPokeDatas(arr);
   };
 
   return (
@@ -93,9 +94,8 @@ function App() {
         <Instruction></Instruction>
         <PokeCardList
           handleClickPokeCard={handleClickPokeCard}
-          pokeDatas={
-            randomizedPokeDatas.length === 0 ? pokeDatas : randomizedPokeDatas
-          }
+          pokeDatas={pokeDatas}
+          loading={isLoading}
         ></PokeCardList>
       </Main>
     </div>

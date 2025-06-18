@@ -1,5 +1,5 @@
 @import "tailwindcss";
 
 .pokeCardList {
-  @apply flex flex-wrap justify-center gap-2.5 max-w-[1000px];
+  @apply flex flex-wrap justify-center gap-2.5 max-w-[1300px];
 }

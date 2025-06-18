@@ -1,7 +1,32 @@
 @import "tailwindcss";
 
-.pokeCard {
-  @apply border-3 border-sky-700 rounded-md w-[120px] h-[170px] p-2 text-center cursor-pointer bg-yellow-500;
+.flipPokeCard {
+  @apply bg-transparent w-[125px] h-[175px] perspective-midrange;
+}
+
+.flipPokeCardInner {
+  @apply relative w-full h-full transform-3d;
+}
+
+.flipPokeCardFront,
+.flipPokeCardBack {
+  @apply absolute w-full h-full backface-hidden rounded-[10px];
+}
+
+.flipPokeCardBack {
+  @apply transform-[rotateY(180deg)];
+}
+
+.flipPokeCardFront {
+  @apply text-center p-2.5 border-5 border-sky-700 bg-yellow-500;
+}
+
+.loading {
+  animation: flip 600ms linear;
+}
+
+.pokeCardBackImg {
+  @apply rounded-[10px];
 }
 
 .pokeImgWrapper {
@@ -9,5 +34,14 @@
 }
 
 .pokeImg {
-  @apply border border-transparent bg-white;
+  @apply border-3 border-slate-400 bg-white;
+}
+
+@keyframes flip {
+  0% {
+    transform: rotateY(180deg);
+  }
+  100% {
+    transform: rotateY(0deg);
+  }
 }
