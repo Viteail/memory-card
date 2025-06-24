@@ -1,8 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import "./index.css";
 
-import { Header, Instruction, Main, PokeCardList, Scores } from "./components";
+import {
+  Header,
+  Instruction,
+  Main,
+  PokeCardList,
+  Scores,
+  LoadingSpin,
+} from "./components";
 
 import { generateUniqueRandomNumbers } from "./utils/randomInt";
 
@@ -13,6 +20,8 @@ export interface IPokeData {
 }
 
 function App() {
+  const isInitialRender = useRef(true);
+
   const [newGame, setNewGame] = useState(true);
   const [bestScore, setBestScore] = useState(0);
   const [currentScore, setCurrentScore] = useState(0);
@@ -36,13 +45,20 @@ function App() {
   };
 
   useEffect(() => {
+    if (isInitialRender.current) {
+      isInitialRender.current = false;
+      return;
+    }
+
     if (!newGame) return;
     let ignore = false;
 
-    const randomPokeIds = generateUniqueRandomNumbers(1, 1025, 20);
-
     const fetchPokemon = async () => {
+      const randomPokeIds = generateUniqueRandomNumbers(1, 1025, 20);
       try {
+        setLoading(true);
+        setNewGame(false);
+
         const promises = randomPokeIds.map(async (id) => {
           const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}/`);
           if (!res.ok) throw new Error("Network response was not ok");
@@ -55,19 +71,15 @@ function App() {
           spriteUrl: res.sprites.front_default,
           id: res.id,
         }));
-        setPokeDatas(data);
+
+        if (ignore) setPokeDatas(data);
       } catch (error) {
         console.error("Error fetching pokemon data: ", error);
+      } finally {
+        setLoading(false);
       }
     };
-    if (!ignore) {
-      setNewGame(false);
-      setLoading(true);
-      fetchPokemon();
-      setTimeout(() => {
-        setLoading(false);
-      }, 600);
-    }
+    fetchPokemon();
 
     return () => {
       ignore = true;
@@ -86,19 +98,22 @@ function App() {
   };
 
   return (
-    <div>
+    <>
       <Header>
         <Scores bestScore={bestScore} currentScore={currentScore}></Scores>
       </Header>
       <Main>
         <Instruction></Instruction>
-        <PokeCardList
-          handleClickPokeCard={handleClickPokeCard}
-          pokeDatas={pokeDatas}
-          loading={isLoading}
-        ></PokeCardList>
+        {isLoading ? (
+          <LoadingSpin></LoadingSpin>
+        ) : (
+          <PokeCardList
+            handleClickPokeCard={handleClickPokeCard}
+            pokeDatas={pokeDatas}
+          ></PokeCardList>
+        )}
       </Main>
-    </div>
+    </>
   );
 }
 

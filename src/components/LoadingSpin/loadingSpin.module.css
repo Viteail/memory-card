@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+.wrapper {
+  @apply p-5;
+}
+
+.spin {
+  @apply animate-[fast-spin_0.2s_linear_infinite];
+}
+
+@keyframes fast-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

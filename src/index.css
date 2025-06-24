@@ -4,6 +4,10 @@
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
+#root {
+  @apply flex flex-col min-h-screen;
+}
+
 @font-face {
   font-family: PokemonSolid;
   src: url(assets/fonts/PokemonSolid.ttf);

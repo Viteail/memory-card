@@ -5,7 +5,7 @@
 }
 
 .flipPokeCardInner {
-  @apply relative w-full h-full transform-3d;
+  @apply animate-[flip_1s_ease-in] relative w-full h-full transform-3d;
 }
 
 .flipPokeCardFront,

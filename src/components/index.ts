@@ -7,3 +7,5 @@ export { Main } from "./Main";
 export { Instruction } from "./Instruction";
 
 export { PokeCardList } from "./PokeCardList";
+
+export { LoadingSpin } from "./LoadingSpin";
