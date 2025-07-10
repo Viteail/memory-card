@@ -114,13 +114,17 @@ function App() {
     setPokeDatas(arr);
   };
 
-  console.log(newGame);
-  console.log(pokeDatas);
-  console.log("d", isLoading);
-
   return (
     <>
-      <Header>
+      <Header
+        onClickShowMenu={() => {
+          setShowMenu(true);
+          setBestScore((prev) => (currentScore > prev ? currentScore : prev));
+          setCurrentScore(0);
+          setSelectedPokemons([]);
+          setWin(false);
+        }}
+      >
         <Scores bestScore={bestScore} currentScore={currentScore}></Scores>
       </Header>
       <Main>

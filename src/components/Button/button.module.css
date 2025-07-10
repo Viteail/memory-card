@@ -3,3 +3,7 @@
 .menu {
   @apply cursor-pointer text-stone-600 text-shadow-[2px_2px_var(--color-stone-300)];
 }
+
+.header {
+  @apply cursor-pointer text-yellow-400;
+}

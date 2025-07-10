@@ -2,12 +2,13 @@ import classes from "./button.module.css";
 
 interface IButtonProps {
   children: React.ReactNode;
-  variant: "menu";
+  variant: "menu" | "header";
   onClick: () => void;
 }
 
 const VariantMap = {
   menu: classes.menu,
+  header: classes.header,
 };
 
 export const Button: React.FC<IButtonProps> = (props) => {
@@ -15,7 +16,9 @@ export const Button: React.FC<IButtonProps> = (props) => {
 
   return (
     <>
-      <button onClick={onClick} className={VariantMap[variant]}>{children}</button>
+      <button onClick={onClick} className={VariantMap[variant]}>
+        {children}
+      </button>
     </>
   );
 };

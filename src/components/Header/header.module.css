@@ -1,7 +1,15 @@
 @import "tailwindcss";
 
 .header {
-  @apply flex flex-col items-center text-center p-5 gap-5 bg-rose-700;
+  @apply flex items-center text-center p-5 gap-5 bg-rose-700;
+}
+
+.wrapper {
+  @apply flex flex-col w-full items-center gap-5;
+}
+
+.btnWrapper {
+  @apply p-5;
 }
 
 .title {
