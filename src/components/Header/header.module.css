@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 .header {
-  @apply flex items-center text-center p-5 gap-5 bg-rose-700;
+  @apply flex items-center text-center p-5 pr-[122px] gap-5 bg-rose-700;
 }
 
 .wrapper {
@@ -15,4 +15,10 @@
 .title {
   @apply text-5xl text-yellow-400 font-[PokemonSolid];
   -webkit-text-stroke: var(--color-sky-700) 2.5px;
+}
+
+@media only screen and (max-width: 800px) {
+  .header {
+    @apply flex-col-reverse pr-5;
+  }
 }

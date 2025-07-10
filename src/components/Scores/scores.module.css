@@ -3,3 +3,9 @@
 .wrapper {
   @apply flex gap-5 text-yellow-400;
 }
+
+@media only screen and (max-width: 400px) {
+  .wrapper {
+    @apply flex-col;
+  }
+}
