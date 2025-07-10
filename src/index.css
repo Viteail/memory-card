@@ -2,6 +2,13 @@
 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  @apply font-[PokemonClassic];
+
+  --pixel-bg: white; /* Inner background color */
+  --pixel-border: var(--color-sky-200); /* Inner border color: */
+  --pixel-border-2: var(--color-sky-700); /* Middle border color: */
+  --pixel-border-3: var(--color-sky-700); /* Outer border color */
+  --pixel: 0.15625rem; /* Pixel size */
 }
 
 #root {
@@ -11,4 +18,9 @@
 @font-face {
   font-family: PokemonSolid;
   src: url(assets/fonts/PokemonSolid.ttf);
+}
+
+@font-face {
+  font-family: PokemonClassic;
+  src: url(assets/fonts/PokemonClassic.ttf);
 }

@@ -9,6 +9,8 @@ import {
   PokeCardList,
   Scores,
   LoadingSpin,
+  Menu,
+  WinMenu,
 } from "./components";
 
 import { generateUniqueRandomNumbers } from "./utils/randomInt";
@@ -22,7 +24,12 @@ export interface IPokeData {
 function App() {
   const isInitialRender = useRef(true);
 
-  const [newGame, setNewGame] = useState(true);
+  const [newGame, setNewGame] = useState(false);
+  const [difficultyValue, setDifficultyValue] = useState(0);
+  const [isWin, setWin] = useState(false);
+
+  const [showMenu, setShowMenu] = useState(true);
+
   const [bestScore, setBestScore] = useState(0);
   const [currentScore, setCurrentScore] = useState(0);
 
@@ -41,6 +48,12 @@ function App() {
     }
     setSelectedPokemons((prev) => [...prev, pokeId]);
     setCurrentScore((prev) => prev + 1);
+
+    if (currentScore === pokeDatas.length - 1) {
+      setBestScore((prev) => (currentScore > prev ? currentScore + 1 : prev));
+      setWin(true);
+      return;
+    }
     randomizeData();
   };
 
@@ -54,7 +67,11 @@ function App() {
     let ignore = false;
 
     const fetchPokemon = async () => {
-      const randomPokeIds = generateUniqueRandomNumbers(1, 1025, 20);
+      const randomPokeIds = generateUniqueRandomNumbers(
+        1,
+        1025,
+        difficultyValue,
+      );
       try {
         setLoading(true);
         setNewGame(false);
@@ -84,7 +101,7 @@ function App() {
     return () => {
       ignore = true;
     };
-  }, [newGame]);
+  }, [newGame, difficultyValue]);
 
   const randomizeData = () => {
     const arr = [...pokeDatas];
@@ -97,20 +114,53 @@ function App() {
     setPokeDatas(arr);
   };
 
+  console.log(newGame);
+  console.log(pokeDatas);
+  console.log("d", isLoading);
+
   return (
     <>
       <Header>
         <Scores bestScore={bestScore} currentScore={currentScore}></Scores>
       </Header>
       <Main>
-        <Instruction></Instruction>
-        {isLoading ? (
-          <LoadingSpin></LoadingSpin>
-        ) : (
-          <PokeCardList
-            handleClickPokeCard={handleClickPokeCard}
-            pokeDatas={pokeDatas}
-          ></PokeCardList>
+        {isWin && (
+          <WinMenu
+            onClickShowMenu={() => {
+              setShowMenu(true);
+              setCurrentScore(0);
+              setWin(false);
+            }}
+            onClickPlayAgain={() => {
+              setCurrentScore(0);
+              setSelectedPokemons([]);
+              setNewGame(true);
+              setWin(false);
+            }}
+          ></WinMenu>
+        )}
+        {showMenu && (
+          <Menu
+            onClickStartGame={(value: number) => {
+              setNewGame(true);
+              setDifficultyValue(value);
+              setSelectedPokemons([]);
+              setShowMenu(false);
+            }}
+          ></Menu>
+        )}
+        {!showMenu && currentScore !== difficultyValue && (
+          <>
+            <Instruction></Instruction>
+            {isLoading ? (
+              <LoadingSpin></LoadingSpin>
+            ) : (
+              <PokeCardList
+                handleClickPokeCard={handleClickPokeCard}
+                pokeDatas={pokeDatas}
+              ></PokeCardList>
+            )}
+          </>
         )}
       </Main>
     </>
